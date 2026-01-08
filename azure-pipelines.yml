@@ -8,7 +8,7 @@ pool:
 
 variables:
   imageRepository: my-devops-app
-  dockerfilePath: src/dockerfile   # ✅ Update if your Dockerfile is in a different folder
+  dockerfilePath: dockerfile   # ✅ lowercase & root-level
   tag: latest
 
 stages:
@@ -21,7 +21,7 @@ stages:
     - task: Docker@2
       displayName: Build and Push Docker Image
       inputs:
-        containerRegistry: acr-docker-connection   # ✅ Azure DevOps service connection name
+        containerRegistry: acr-docker-connection   # ✅ must EXIST in Service connections
         repository: $(imageRepository)
         command: buildAndPush
         Dockerfile: $(dockerfilePath)
