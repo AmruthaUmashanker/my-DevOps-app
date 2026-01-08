@@ -8,7 +8,7 @@ pool:
 
 variables:
   imageRepository: my-devops-app
-  dockerfilePath: src/Dockerfile   # ✅ Correct path to your Dockerfile
+  dockerfilePath: src/dockerfile   # ✅ Correct path to your Dockerfile
   tag: latest
 
 stages:
