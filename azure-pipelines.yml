@@ -8,8 +8,7 @@ pool:
 
 variables:
   imageRepository: my-devops-app
-  containerRegistry: <firstcontainer2.azurecr.io>.azurecr.io
-  dockerfilePath: Dockerfile
+  dockerfilePath: Dockerfile   # adjust if in a subfolder
   tag: latest
 
 stages:
@@ -21,7 +20,7 @@ stages:
     - task: Docker@2
       displayName: Build and Push
       inputs:
-        containerRegistry: acr-docker-connection
+        containerRegistry: acr-docker-connection   # Service connection name in Azure DevOps
         repository: $(imageRepository)
         command: buildAndPush
         Dockerfile: $(dockerfilePath)
