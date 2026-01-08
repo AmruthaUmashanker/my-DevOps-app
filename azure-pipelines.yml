@@ -21,7 +21,7 @@ stages:
     - task: Docker@2
       displayName: Build and Push
       inputs:
-        containerRegistry: acr-service-connection
+        containerRegistry: acr-docker-connection
         repository: $(imageRepository)
         command: buildAndPush
         Dockerfile: $(dockerfilePath)
