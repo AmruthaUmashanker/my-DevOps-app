@@ -8,7 +8,7 @@ pool:
 
 variables:
   imageRepository: my-devops-app
-  dockerfilePath: dockerfile   # ✅ lowercase & root-level
+  dockerfilePath: dockerfile
   tag: latest
 
 stages:
@@ -21,9 +21,24 @@ stages:
     - task: Docker@2
       displayName: Build and Push Docker Image
       inputs:
-        containerRegistry: acr-docker-connection   # ✅ must EXIST in Service connections
+        containerRegistry: acr-docker-connection       # Docker Registry connection
         repository: $(imageRepository)
         command: buildAndPush
         Dockerfile: $(dockerfilePath)
         tags: |
           $(tag)
+
+- stage: Deploy
+  displayName: Deploy to Azure Web App
+  dependsOn: Build
+  jobs:
+  - job: Deploy
+    displayName: Deploy to Web App
+    steps:
+    - task: AzureWebAppContainer@1
+      displayName: Deploy to Web App
+      inputs:
+        azureSubscription: acr-service-connection       # ✅ AzureRM connection (authorized)
+        appName: your-app-service-name                  # 🔧 Replace with actual App Service name
+        containers: |
+          $(imageRepository):$(tag)
